@@ -1,0 +1,12 @@
+{
+  "name": "excel-officejs",
+  "version": "1.0.0",
+  "description": "--- page_type: sample urlFragment: excel-add-in-hello-world products:   - office-add-ins   - office-excel   - office   - office-365 languages:   - javascript extensions:   contentType: samples   technologies:     - Add-ins   createdDate: '10/11/2021 10:00:00 AM' description: 'Create a simple Excel add-in that displays hello world.' ---",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dylan Vause <herecomesdylan@yahoo.com> (https://dylanvause.com/)",
+  "license": "ISC"
+}
