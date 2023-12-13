@@ -1,0 +1,28 @@
+{
+    "functions": [
+        {
+            "id": "CUSTOM_ADD",
+            "name": "CUSTOM_ADD",
+            "description": "Adds two numbers",
+            "helpUrl": "http://www.contoso.com/help",
+            "result": {
+                "type": "number",
+                "dimensionality": "scalar"
+            },
+            "parameters": [
+                {
+                    "name": "first",
+                    "description": "The first number to add",
+                    "type": "number",
+                    "dimensionality": "scalar"
+                },
+                {
+                    "name": "second",
+                    "description": "The second number to add",
+                    "type": "number",
+                    "dimensionality": "scalar"
+                }
+            ]
+        }
+    ]
+}
