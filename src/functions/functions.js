@@ -1,7 +1,7 @@
 
 /**
  * 
- * @param {Date} date 
+ * @param {number} date 
  * @param {number} hour 
  * @returns
  */

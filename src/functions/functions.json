@@ -11,7 +11,7 @@
             },
             "parameters": [
                 {
-                    "name": "date",
+                    "name": "number",
                     "description": "The day to fetch the pool price for.",
                     "type": "Date",
                     "dimensionality": "scalar"
