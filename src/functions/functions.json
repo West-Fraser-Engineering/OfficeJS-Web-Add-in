@@ -13,7 +13,7 @@
                 {
                     "name": "number",
                     "description": "The day to fetch the pool price for.",
-                    "type": "Date",
+                    "type": "number",
                     "dimensionality": "scalar"
                 },
                 {
