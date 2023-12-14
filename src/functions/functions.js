@@ -1,7 +1,12 @@
 
-
-function custom_add(first, second) {
-    return first + second;
+/**
+ * 
+ * @param {Date} date 
+ * @param {number} hour 
+ * @returns
+ */
+function AesoPoolPrice(date, hour) {
+    return -1;
 }
 
-CustomFunctions.associate("CUSTOM_ADD", custom_add);
+CustomFunctions.associate("AesoPoolPrice", AesoPoolPrice);
