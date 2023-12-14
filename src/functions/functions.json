@@ -1,24 +1,24 @@
 {
     "functions": [
         {
-            "id": "CUSTOM_ADD",
-            "name": "CUSTOM_ADD",
-            "description": "Adds two numbers",
-            "helpUrl": "http://www.contoso.com/help",
+            "id": "AesoPoolPrice",
+            "name": "AesoPoolPrice",
+            "description": "Retrieves the pool price from AESO for the specified date and time, in $/MWh.",
+            "helpUrl": "https://west-fraser-engineering.github.io/OfficeJS-Web-Add-in/docs",
             "result": {
                 "type": "number",
                 "dimensionality": "scalar"
             },
             "parameters": [
                 {
-                    "name": "first",
-                    "description": "The first number to add",
-                    "type": "number",
+                    "name": "date",
+                    "description": "The day to fetch the pool price for.",
+                    "type": "Date",
                     "dimensionality": "scalar"
                 },
                 {
-                    "name": "second",
-                    "description": "The second number to add",
+                    "name": "hour",
+                    "description": "The hour to fetch the pool price for.",
                     "type": "number",
                     "dimensionality": "scalar"
                 }
