@@ -7,7 +7,7 @@
  * @returns
  */
 function AesoPoolPrice(date, hour) {
-    prompt('Enter API key')
+    console.log(localStorage.getItem('aeso-api-key'));
     return -1;
 }
 

@@ -1,1 +1,1 @@
-(()=>{function o(o,t){return prompt("Enter API key"),-1}CustomFunctions.associate("AesoPoolPrice",o),CustomFunctions.associate("AESOPOOLPRICE",o)})();
+(()=>{function o(o,e){return console.log(localStorage.getItem("aeso-api-key")),-1}CustomFunctions.associate("AesoPoolPrice",o),CustomFunctions.associate("AESOPOOLPRICE",o)})();
