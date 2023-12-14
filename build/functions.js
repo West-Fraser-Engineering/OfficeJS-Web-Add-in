@@ -1,0 +1,1 @@
+(()=>{function o(o,s){return-1}CustomFunctions.associate("AesoPoolPrice",o),CustomFunctions.associate("AESOPOOLPRICE",o)})();

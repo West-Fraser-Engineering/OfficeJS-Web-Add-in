@@ -1,0 +1,19 @@
+{
+    "functions": [
+        {
+            "id": "AESOPOOLPRICE",
+            "name": "AESOPOOLPRICE",
+            "parameters": [
+                {
+                    "name": "date",
+                    "type": "number"
+                },
+                {
+                    "name": "hour",
+                    "type": "number"
+                }
+            ],
+            "result": {}
+        }
+    ]
+}
