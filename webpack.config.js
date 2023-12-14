@@ -54,7 +54,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                { from: './src/taskpane/taskpane.html', to: '' },
+                { from: '**/*.html', to: '', context: 'src/' },
             ]
         }),
         new CustomFunctionsMetadataPlugin({
