@@ -13,19 +13,24 @@ async function AesoPoolPrice(date, hour) {
     let year = js_date.getFullYear().toFixed();
     let month = js_date.getMonth().toFixed();
     let day = js_date.getDate().toFixed();
-    month = month.padStart(2-month.length, "0");
-    day = month.padStart(2-day.length, "0");
+    month = month.padStart(2 - month.length, "0");
+    day = month.padStart(2 - day.length, "0");
     const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1.1/price/poolPrice?startDate=${year}-${month}-${day}&endDate=${year}-${month}-${day}`;
 
     const response = await fetch(endpoint, {
         headers: {
-            'X-API-Key': localStorage.getItem('aeso-api-key')   
+            'X-API-Key': localStorage.getItem('aeso-api-key')
         }
     });
 
     const json = await response.json();
 
-    return JSON.stringify(json, null, 4);
+    const results = [];
+    for (const item of json.return["Pool Price Report"]) {
+        results.push(item.pool_price);
+    }
+
+    return results;
 }
 
 CustomFunctions.associate("AesoPoolPrice", AesoPoolPrice);
