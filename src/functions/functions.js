@@ -4,7 +4,7 @@
  * @customfunction AesoPoolPrice
  * @param {number} date 
  * @param {number} hour 
- * @returns
+ * @returns {Promise<number[][]}
  */
 async function AesoPoolPrice(date, hour) {
     console.log(localStorage.getItem('aeso-api-key'));
@@ -27,7 +27,7 @@ async function AesoPoolPrice(date, hour) {
 
     const results = [];
     for (const item of json.return["Pool Price Report"]) {
-        results.push(item.pool_price);
+        results.push([item.pool_price]);
     }
 
     return results;
