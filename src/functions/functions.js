@@ -15,7 +15,7 @@ async function AesoPoolPrice(date, hour) {
     let day = js_date.getDate().toFixed();
     month = month.padStart(2-month.length, "0");
     day = month.padStart(2-day.length, "0");
-    const endpoint = `https://api.aeso.ca/report/v1.1/price/poolPrice?startDate=${year}-${month}-${day}&endDate=${year}-${month}-${day}`;
+    const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1.1/price/poolPrice?startDate=${year}-${month}-${day}&endDate=${year}-${month}-${day}`;
 
     const response = await fetch(endpoint, {
         headers: {
