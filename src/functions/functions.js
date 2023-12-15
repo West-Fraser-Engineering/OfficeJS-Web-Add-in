@@ -37,11 +37,30 @@ CustomFunctions.associate("AesoPoolPrice", AesoPoolPrice);
 
 /**Converts an Excel date serial into a Date object.
  * 
- * @param {number} serial - The Excel date serial number
+ * @param {number} xlSerial - The Excel date serial number
  * @returns 
  */
-function dateFromSerial(serial) {
-    const milliseconds_since_jan_1_1900 = (serial - 1) * 24 * 3600 * 1000;
-    const jan_1_1900 = new Date(1900, 0, 1, 0, 0, 0, 0);
-    return new Date(jan_1_1900.getTime() + milliseconds_since_jan_1_1900);
+function dateFromSerial(xlSerial) {
+  // milliseconds since 1899-12-31T00:00:00Z, corresponds to Excel serial 0.
+  const xlSerialOffset = -2209075200000; 
+
+  let elapsedDays;
+  // each serial up to 60 corresponds to a valid calendar date.
+  // serial 60 is 1900-02-29. This date does not exist on the calendar.
+  // we choose to interpret serial 60 (as well as 61) both as 1900-03-01
+  // so, if the serial is 61 or over, we have to subtract 1.
+  if (xlSerial < 61) {
+    elapsedDays = xlSerial;
+  }
+  else {
+    elapsedDays = xlSerial - 1;
+  }
+
+  // javascript dates ignore leap seconds
+  // each day corresponds to a fixed number of milliseconds:
+  // 24 hrs * 60 mins * 60 s * 1000 ms
+  const millisPerDay = 86400000;
+    
+  const jsTimestamp = xlSerialOffset + elapsedDays * millisPerDay;
+  return new Date(jsTimestamp);
 }
