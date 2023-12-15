@@ -25,6 +25,8 @@ async function AesoPoolPrice(date, hour) {
 
     const json = await response.json();
 
+    console.log(json);
+
     const results = [];
     for (const item of json.return["Pool Price Report"]) {
         results.push([item.pool_price]);
