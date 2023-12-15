@@ -41,7 +41,7 @@ CustomFunctions.associate("AesoPoolPrice", AesoPoolPrice);
  * @returns 
  */
 function dateFromSerial(serial) {
-    const utc_days = Math.floor(serial - 25569);
-    const utc_value = utc_days * 86400;
-    return new Date(utc_value * 1000);
+    const milliseconds_since_jan_1_1900 = (serial - 1) * 24 * 3600 * 1000;
+    const jan_1_1900 = new Date(1900, 0, 1, 0, 0, 0, 0);
+    return new Date(jan_1_1900.getTime() + milliseconds_since_jan_1_1900);
 }
