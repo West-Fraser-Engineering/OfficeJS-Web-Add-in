@@ -66,3 +66,12 @@ function dateFromSerial(xlSerial) {
   const jsTimestamp = xlSerialOffset + elapsedDays * millisPerDay;
   return new Date(jsTimestamp);
 }
+
+/**Converts an Excel date to a JavaScript date.
+ * 
+ * @customfunction xlDateToJsDate
+ * @param {number} xlSerial - The Excel date serial number
+ */
+function xlDateToJsDate(xlSerial) {
+    return dateFromSerial(xlSerial).toString();
+}

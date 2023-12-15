@@ -17,6 +17,19 @@
                 "dimensionality": "matrix",
                 "type": "number"
             }
+        },
+        {
+            "description": "Converts an Excel date to a JavaScript date.",
+            "id": "XLDATETOJSDATE",
+            "name": "XLDATETOJSDATE",
+            "parameters": [
+                {
+                    "description": "The Excel date serial number",
+                    "name": "xlSerial",
+                    "type": "number"
+                }
+            ],
+            "result": {}
         }
     ]
 }
