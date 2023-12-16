@@ -6,7 +6,7 @@
             "parameters": [
                 {
                     "name": "date",
-                    "type": "number"
+                    "type": "any"
                 },
                 {
                     "name": "hour",
