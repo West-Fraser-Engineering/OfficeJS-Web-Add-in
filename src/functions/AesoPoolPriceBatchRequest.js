@@ -91,6 +91,7 @@ async function makeRequest() {
                     invocation_entry.reject(error);
                 }
             }
+            resolve();
         }));
     }
 
