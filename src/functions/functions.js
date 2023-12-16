@@ -9,10 +9,12 @@ import { parseDate } from "./xlDate";
  * @returns {Promise<number[][]}
  */
 async function AesoPoolPrice(date, hour) {
-    const js_date = parseDate(date);
+    let js_date = parseDate(date);
     const json = await pushRequest(js_date);
 
     console.log(json);
+
+    js_date = new Date(js_date.getUTCFullYear(), js_date.getUTCMonth(), js_date.getUTCDate() + 1);
 
     const begin_datetime_mpt = `${
         js_date.getUTCFullYear()
