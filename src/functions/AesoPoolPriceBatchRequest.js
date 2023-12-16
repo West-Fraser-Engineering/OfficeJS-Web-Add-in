@@ -46,17 +46,21 @@ async function makeRequest() {
 
     const entries = Array.from(copied_batch.entries()).sort((a, b) => a[0].getTime() - b[0].getTime());
 
+    /** @type {Map<string, {resolve: (value: any) => void, reject: (value: any) => void}[]}>} */
     const requests = new Map();
     /** @type {Date | null} */
     let start_date = null;
-    let invocation_entries = [];
+    /** @type {{resolve: (value: any) => void, reject: (value: any) => void}[]} */
+    let batched_invocation_entries = [];
     for (let i = 0; i < entries.length; i++) {
-        const [date, invocationEntry] = entries[i];
+        const [date, invocation_entries] = entries[i];
         if (start_date == null) {
             start_date = date;
         }
 
-        invocation_entries.push(invocationEntry);
+        for (const invocation_entry of invocation_entries) {
+            batched_invocation_entries.push(invocation_entry);
+        }
 
         if (date - start_date > millisecondsInYear || i == entries.length - 1) {
             // Make a request
@@ -68,9 +72,9 @@ async function makeRequest() {
             let end_day = (date.getUTCDate() + 1).toFixed().padStart(2, "0");
             const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1.1/price/poolPrice?startDate=${start_year}-${start_month}-${start_day}&endDate=${end_year}-${end_month}-${end_day}`;
 
-            requests.set(endpoint, invocation_entries);
+            requests.set(endpoint, batched_invocation_entries);
             start_date = null;
-            invocation_entries = [];
+            batched_invocation_entries = [];
         }
     }
 
