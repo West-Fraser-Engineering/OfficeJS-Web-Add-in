@@ -28,7 +28,7 @@ export function pushRequest(request_date) {
         batch.set(request_date, [invocationEntry]);
     }
 
-    if (!_isBatchedRequestScheduled) {
+    if (!is_batched_request_scheduled) {
         is_batched_request_scheduled = true;
         setTimeout(makeRequest, BATCH_REQUEST_DELAY);
     }
