@@ -85,11 +85,11 @@ function createFormattedNumber(value, format) {
 
 
 /**
- * Logs its inputs.
+ * Logs its input to the dev console.
  * @customfunction
  * @param {any} value
  * @returns
  */
-function LogInputs(value) {
-    console.log(value);
+function LogInput(value) {
+    console.log(typeof value + ":",  value);
 }

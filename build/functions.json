@@ -49,9 +49,9 @@
             "result": {}
         },
         {
-            "description": "Logs its inputs.",
-            "id": "LOGINPUTS",
-            "name": "LOGINPUTS",
+            "description": "Logs its input to the dev console.",
+            "id": "LOGINPUT",
+            "name": "LOGINPUT",
             "parameters": [
                 {
                     "name": "value",
