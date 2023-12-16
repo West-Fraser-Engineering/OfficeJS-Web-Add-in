@@ -12,6 +12,8 @@ async function AesoPoolPrice(date, hour) {
     const js_date = parseDate(date);
     const json = await pushRequest(js_date);
 
+    console.log(json);
+
     const begin_datetime_mpt = `${
         js_date.getUTCFullYear()
     }-${
@@ -27,7 +29,9 @@ async function AesoPoolPrice(date, hour) {
         }
     }
 
-    return results;
+    throw new Error("Not found.")
+
+    // return json;
 }
 
 /**Converts an Excel date to a JavaScript date.
