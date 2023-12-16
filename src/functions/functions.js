@@ -1,3 +1,4 @@
+import { pushRequest } from "./AesoPoolPriceBatchRequest";
 import { parseDate } from "./xlDate";
 
 /**
@@ -11,26 +12,21 @@ async function AesoPoolPrice(date, hour) {
     console.log(localStorage.getItem('aeso-api-key'));
 
     const js_date = parseDate(date);
-    let year = js_date.getUTCFullYear().toFixed();
-    let month = (js_date.getUTCMonth() + 1).toFixed();
-    let day = (js_date.getUTCDate() + 1).toFixed();
-    month = month.padStart(2, "0");
-    day = month.padStart(2, "0");
-    const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1.1/price/poolPrice?startDate=${year}-${month}-${day}&endDate=${year}-${month}-${day}`;
-
-    const response = await fetch(endpoint, {
-        headers: {
-            'X-API-Key': localStorage.getItem('aeso-api-key')
-        }
-    });
-
-    const json = await response.json();
-
-    console.log(json);
-
-    const results = [];
+    const json = await pushRequest(js_date);
+    "2023-01-01 00:00"
+    const begin_datetime_mpt = `${
+        js_date.getUTCFullYear()
+    }-${
+        (js_date.getUTCMonth() + 1).toString().padStart(2, '0')
+    }-${
+        (js_date.getUTCDate() + 1).toString().padStart(2, '0')
+    } ${
+        hour.toString().padStart(2, '0')
+    }:00`
     for (const item of json.return["Pool Price Report"]) {
-        results.push([item.pool_price]);
+        if (item.begin_datetime_mpt == begin_datetime_mpt) {
+            return item.pool_price;
+        }
     }
 
     return results;
@@ -68,5 +64,5 @@ function createFormattedNumber(value, format) {
  * @returns
  */
 function LogInput(value) {
-    console.log(typeof value + ":",  value);
+    console.log(typeof value + ":", value);
 }
