@@ -30,6 +30,35 @@
                 }
             ],
             "result": {}
+        },
+        {
+            "description": "Take a number as the input value and return a formatted number value as the output.",
+            "id": "CREATEFORMATTEDNUMBER",
+            "name": "CREATEFORMATTEDNUMBER",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "number"
+                },
+                {
+                    "description": "(e.g. \"0.00%\")",
+                    "name": "format",
+                    "type": "string"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Logs its inputs.",
+            "id": "LOGINPUTS",
+            "name": "LOGINPUTS",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "any"
+                }
+            ],
+            "result": {}
         }
     ]
 }

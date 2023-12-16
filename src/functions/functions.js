@@ -67,3 +67,29 @@ function dateFromSerial(xlSerial) {
 function xlDateToJsDate(xlSerial) {
     return dateFromSerial(xlSerial).toString();
 }
+
+/**
+ * Take a number as the input value and return a formatted number value as the output.
+ * @customfunction
+ * @param {number} value
+ * @param {string} format (e.g. "0.00%")
+ * @returns A formatted number value.
+ */
+function createFormattedNumber(value, format) {
+    return {
+        type: "FormattedNumber",
+        basicValue: value,
+        numberFormat: format
+    }
+}
+
+
+/**
+ * Logs its inputs.
+ * @customfunction
+ * @param {any} value
+ * @returns
+ */
+function LogInputs(value) {
+    console.log(value);
+}
