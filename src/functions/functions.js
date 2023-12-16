@@ -43,28 +43,20 @@ CustomFunctions.associate("AesoPoolPrice", AesoPoolPrice);
  * @returns 
  */
 function dateFromSerial(xlSerial) {
-  // milliseconds since 1899-12-31T00:00:00Z, corresponds to Excel serial 0.
-  const xlSerialOffset = -2209075200000; 
-
-  let elapsedDays;
   // each serial up to 60 corresponds to a valid calendar date.
   // serial 60 is 1900-02-29. This date does not exist on the calendar.
   // we choose to interpret serial 60 (as well as 61) both as 1900-03-01
   // so, if the serial is 61 or over, we have to subtract 1.
   if (xlSerial < 61) {
-    elapsedDays = xlSerial;
+    xlSerial = xlSerial;
   }
   else {
-    elapsedDays = xlSerial - 1;
+    xlSerial = xlSerial - 1;
   }
 
-  // javascript dates ignore leap seconds
-  // each day corresponds to a fixed number of milliseconds:
-  // 24 hrs * 60 mins * 60 s * 1000 ms
-  const millisPerDay = 86400000;
-    
-  const jsTimestamp = xlSerialOffset + elapsedDays * millisPerDay;
-  return new Date(jsTimestamp);
+  let timestamp = (xlSerial-25568) * 24 * 3600*1000;
+
+  return new Date(timestamp);
 }
 
 /**Converts an Excel date to a JavaScript date.
