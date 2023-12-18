@@ -68,16 +68,16 @@ function pushRequest(asset_id: string, dateTime: Date): Promise<void> {
 
 async function makeRequest() {
     console.log("Make request called");
-    
+
     const millisecondsInDay = 24 * 60 * 60 * 1000;
     const maxGapInDays = 5;
+    const aesoApiKey = localStorage.getItem('aeso-api-key') ?? "";
 
     const copied_batch = batch;
     batch = [];
     is_batched_request_scheduled = false;
 
-    const organized_batch: Map<string /*AssetId*/, Map<number /*Timestamp*/, { resolve: (volume: number) => void, reject: (err: any) => void }[]>> = new Map();
-    const promise_callbacks: { resolve: () => void, reject: (err: any) => void }[] = [];
+    const organized_batch: Map<string /*AssetId*/, Map<number /*Timestamp*/, { resolve: () => void, reject: (err: any) => void }[]>> = new Map();
 
     for (const item of copied_batch) {
         let asset_batch = organized_batch.get(item.asset_id);
@@ -99,15 +99,20 @@ async function makeRequest() {
     }
 
     const endpoints: string[] = [];
+    const request_promises: Promise<void>[] = [];
 
     for (const [asset_id, asset_batch] of organized_batch.entries()) {
         const sorted_asset_batch_entries = Array.from(asset_batch.entries()).sort((a, b) => a[0] - b[0]);
         let earliest_timestamp: number | null = null;
         let last_timestamp: number | null = null;
+        let callbacks: {
+            resolve: () => void;
+            reject: (err: any) => void;
+        }[] = [];
 
         for (let i = 0; i < sorted_asset_batch_entries.length; i++) {
             const timestamp = sorted_asset_batch_entries[i][0];
-            const entry = sorted_asset_batch_entries[i][1];
+            callbacks.concat(sorted_asset_batch_entries[i][1]);
 
             if (earliest_timestamp == null) {
                 earliest_timestamp = timestamp;
@@ -133,9 +138,50 @@ async function makeRequest() {
                 let endpoint: string;
                 if (start_year == end_year && start_month == end_month && start_day_of_month == end_day_of_month) {
                     endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1/meteredvolume/details?startDate=${start_year}-${start_month}-${start_day_of_month}&asset_ID=${asset_id}`;
-                }else {
+                } else {
                     endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1/meteredvolume/details?startDate=${start_year}-${start_month}-${start_day_of_month}&endDate=${end_year}-${end_month}-${end_day_of_month}&asset_ID=${asset_id}`;
                 }
+
+                const this_request_callbacks = callbacks;
+                callbacks = [];
+                request_promises.push(new Promise<void>(async (resolve, reject) => {
+                    try {
+                        console.log('Request to', endpoint);
+                        const response = await fetch(endpoint, {
+                            headers: {
+                                'X-API-Key': aesoApiKey
+                            }
+                        });
+
+                        const json = await response.json() as AesoMeteredVolumeResponseBody;
+
+                        for (const pool_participant of json.return) {
+                            for (const asset of pool_participant.asset_list) {
+                                let cached_asset = cache.get(asset.asset_id);
+                                if (cached_asset == undefined) {
+                                    cached_asset = new Map();
+                                    cache.set(asset.asset_id, cached_asset);
+                                }
+
+                                for (const metered_volume of asset.metered_volume_list) {
+                                    cached_asset.set(metered_volume.begin_date_mpt, parseFloat(metered_volume.metered_volume));
+                                }
+                            }
+                        }
+
+                        for (const callback of this_request_callbacks) {
+                            callback.resolve();
+                        }
+
+                        resolve();
+                    } catch (err) {
+                        for (const callback of this_request_callbacks) {
+                            callback.reject(err);
+                        }
+                        reject(err);
+                    }
+                }));
+
                 endpoints.push(endpoint);
                 earliest_timestamp = null;
                 last_timestamp = null;
@@ -145,39 +191,5 @@ async function makeRequest() {
         }
     }
 
-    const request_promises: Promise<void>[] = [];
-    for (const endpoint of endpoints) {
-        request_promises.push(new Promise<void>(async (resolve, reject) => {
-            console.log('Request to', endpoint);
-            const response = await fetch(endpoint, {
-                headers: {
-                    'X-API-Key': localStorage.getItem('aeso-api-key') ?? ""
-                }
-            });
-
-            const json = await response.json() as AesoMeteredVolumeResponseBody;
-
-            for (const pool_participant of json.return) {
-                for (const asset of pool_participant.asset_list) {
-                    let cached_asset = cache.get(asset.asset_id);
-                    if (cached_asset == undefined) {
-                        cached_asset = new Map();
-                        cache.set(asset.asset_id, cached_asset);
-                    }
-
-                    for (const metered_volume of asset.metered_volume_list) {
-                        cached_asset.set(metered_volume.begin_date_mpt, parseFloat(metered_volume.metered_volume));
-                    }
-                }
-            }
-
-            resolve();
-        }));
-    }
-
-    Promise.allSettled(request_promises);
-
-    for (const promise_callback of promise_callbacks) {
-        promise_callback.resolve();
-    }
+    await Promise.allSettled(request_promises);
 }
