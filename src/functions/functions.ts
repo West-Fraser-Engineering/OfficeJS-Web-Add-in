@@ -1,3 +1,4 @@
+import { getMeteredVolume } from "./AesoMeteredVolumeBatchRequest";
 import { pushRequest } from "./AesoPoolPriceBatchRequest";
 import { parseDate } from "./xlDate";
 
@@ -28,6 +29,19 @@ async function AesoPoolPrice(date: number | string, hour: number): Promise<numbe
     throw new Error("Not found.")
 
     // return json;
+}
+
+/**
+ * 
+ * @customfunction AesoMeteredVolume
+ * @param {number | string} date 
+ * @param {number} hour 
+ * @returns {Promise<number>}
+ */
+async function AesoMeteredVolume(asset_id: string, date: number | string, hour: number): Promise<number> {
+    let js_date = parseDate(date);
+    const volume = await getMeteredVolume(asset_id, new Date(js_date.getTime() + (hour - 1) * 3600_000));
+    return volume;
 }
 
 /**

@@ -18,6 +18,27 @@
             }
         },
         {
+            "id": "AESOMETEREDVOLUME",
+            "name": "AESOMETEREDVOLUME",
+            "parameters": [
+                {
+                    "name": "asset_id",
+                    "type": "string"
+                },
+                {
+                    "name": "date",
+                    "type": "any"
+                },
+                {
+                    "name": "hour",
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "type": "number"
+            }
+        },
+        {
             "description": "Take a number as the input value and return a formatted number value as the output.",
             "id": "CREATEFORMATTEDNUMBER",
             "name": "CREATEFORMATTEDNUMBER",
