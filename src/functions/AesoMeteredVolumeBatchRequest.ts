@@ -30,7 +30,7 @@ export async function getMeteredVolume(asset_id: string, dateTime: Date): Promis
         }-${(dateTime.getUTCDate() + 1).toFixed().padStart(2, '0')
         } ${dateTime.getUTCHours().toFixed().padStart(2, '0')
         }:00`;
-        
+
     for (let i = 0; i < 2; i++) {
         const cached_asset = cache.get(asset_id);
         const cached_volume = cached_asset?.get(date_time_string);
@@ -96,7 +96,7 @@ async function makeRequest() {
         });
     }
 
-    const requests: string[] = [];
+    const endpoints: string[] = [];
 
     for (const [asset_id, asset_batch] of organized_batch.entries()) {
         const sorted_asset_batch_entries = Array.from(asset_batch.entries()).sort((a, b) => a[0] - b[0]);
@@ -129,7 +129,7 @@ async function makeRequest() {
                 const end_day_of_month = (end_date.getUTCDate() + 1).toFixed().padStart(2, '0');
 
                 const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1/meteredvolume/details?startDate=${start_year}-${start_month}-${start_day_of_month}&endDate=${end_year}-${end_month}-${end_day_of_month}&asset_ID=${asset_id}`;
-                requests.push(endpoint);
+                endpoints.push(endpoint);
                 earliest_timestamp = null;
                 last_timestamp = null;
             }
@@ -137,9 +137,10 @@ async function makeRequest() {
     }
 
     const request_promises: Promise<void>[] = [];
-    for (const request of requests) {
+    for (const endpoint of endpoints) {
         request_promises.push(new Promise<void>(async (resolve, reject) => {
-            const response = await fetch(request, {
+            console.log('Request to', endpoint);
+            const response = await fetch(endpoint, {
                 headers: {
                     'X-API-Key': localStorage.getItem('aeso-api-key') ?? ""
                 }
