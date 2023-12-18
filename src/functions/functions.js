@@ -26,6 +26,7 @@ async function AesoPoolPrice(date, hour) {
         if (item.begin_datetime_mpt == begin_datetime_mpt) {
             return item.pool_price;
         }
+        console.log('Notequal', item.begin_datetime_mpt, begin_datetime_mpt)
     }
 
     throw new Error("Not found.")
