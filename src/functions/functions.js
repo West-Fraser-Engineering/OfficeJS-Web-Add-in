@@ -26,6 +26,7 @@ async function AesoPoolPrice(date, hour) {
     for (const item of json.return["Pool Price Report"]) {
         console.log('Compate', item.begin_datetime_mpt, begin_datetime_mpt)
         if (item.begin_datetime_mpt == begin_datetime_mpt) {
+            console.log(typeof item.pool_price, item.pool_price)
             return parseFloat(item.pool_price);
         }
     }
