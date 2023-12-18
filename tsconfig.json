@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "outDir": "./build",
+        "rootDir": "./src",
+        "strict": true,
+        "noImplicitOverride": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "types": [
+            "node",
+            "office-js"
+        ],
+        "skipLibCheck": true,
+        "moduleResolution": "node",
+        "baseUrl": "./src",
+        "paths": {
+            "@src/*": [
+                "*"
+            ]
+        },
+        "jsx": "react-jsx"
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "build"
+    ],
+}

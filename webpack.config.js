@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: {
-        functions: './src/functions/functions.js',
+        functions: './src/functions/functions',
         // taskpane: ['./src/taskpane/taskpane.html'],
     },
     output: {
@@ -50,6 +50,9 @@ module.exports = {
             // },
         ],
     },
+    externals: {
+        office: "office-js"
+    },
     node: false,
     plugins: [
         new CopyWebpackPlugin({
@@ -59,7 +62,7 @@ module.exports = {
         }),
         new CustomFunctionsMetadataPlugin({
             output: 'functions.json',
-            input: './src/functions/functions.js'
+            input: './src/functions/functions.ts'
         })
     ]
 }

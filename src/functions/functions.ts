@@ -6,9 +6,9 @@ import { parseDate } from "./xlDate";
  * @customfunction AesoPoolPrice
  * @param {number | string} date 
  * @param {number} hour 
- * @returns {Promise<number[][]}
+ * @returns {Promise<number>}
  */
-async function AesoPoolPrice(date, hour) {
+async function AesoPoolPrice(date: number | string, hour: number): Promise<number> {
     let js_date = parseDate(date);
     const json = await pushRequest(js_date);
 
@@ -37,15 +37,6 @@ async function AesoPoolPrice(date, hour) {
     // return json;
 }
 
-/**Converts an Excel date to a JavaScript date.
- * 
- * @customfunction xlDateToJsDate
- * @param {number} xlSerial - The Excel date serial number
- */
-function xlDateToJsDate(xlSerial) {
-    return dateFromSerial(xlSerial).toString();
-}
-
 /**
  * Take a number as the input value and return a formatted number value as the output.
  * @customfunction
@@ -53,7 +44,7 @@ function xlDateToJsDate(xlSerial) {
  * @param {string} format (e.g. "0.00%")
  * @returns A formatted number value.
  */
-function createFormattedNumber(value, format) {
+function createFormattedNumber(value: number, format: string) {
     return {
         type: "FormattedNumber",
         basicValue: value,
@@ -68,6 +59,8 @@ function createFormattedNumber(value, format) {
  * @param {any} value
  * @returns
  */
-function LogInput(value) {
+function LogInput(value: any) {
     console.log(typeof value + ":", value);
 }
+
+declare var CustomFunctions: any;

@@ -3,7 +3,7 @@
  * @param {number} xlSerial - The Excel date serial number
  * @returns 
  */
-function dateFromSerial(xlSerial) {
+function dateFromSerial(xlSerial: number) {
     // each serial up to 60 corresponds to a valid calendar date.
     // serial 60 is 1900-02-29. This date does not exist on the calendar.
     // we choose to interpret serial 60 (as well as 61) both as 1900-03-01
@@ -24,7 +24,7 @@ function dateFromSerial(xlSerial) {
  * 
  * @param {number | string} xlDate 
  */
-export function parseDate(xlDate) {
+export function parseDate(xlDate: number | string) {
     switch (typeof xlDate) {
         case "string": {
             const date = new Date(xlDate);
