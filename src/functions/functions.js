@@ -24,10 +24,10 @@ async function AesoPoolPrice(date, hour) {
     console.log('Search begin_datetime_mpt', begin_datetime_mpt);
     console.log(json.return["Pool Price Report"])
     for (const item of json.return["Pool Price Report"]) {
+        console.log('Compate', item.begin_datetime_mpt, begin_datetime_mpt)
         if (item.begin_datetime_mpt == begin_datetime_mpt) {
             return item.pool_price;
         }
-        console.log('Notequal', item.begin_datetime_mpt, begin_datetime_mpt)
     }
 
     throw new Error("Not found.")
