@@ -128,7 +128,12 @@ async function makeRequest() {
                 const end_month = (end_date.getUTCMonth() + 1).toFixed().padStart(2, '0');
                 const end_day_of_month = (end_date.getUTCDate() + 1).toFixed().padStart(2, '0');
 
-                const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1/meteredvolume/details?startDate=${start_year}-${start_month}-${start_day_of_month}&endDate=${end_year}-${end_month}-${end_day_of_month}&asset_ID=${asset_id}`;
+                let endpoint: string;
+                if (start_year == end_year && start_month == end_month && start_day_of_month == end_day_of_month) {
+                    endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1/meteredvolume/details?startDate=${start_year}-${start_month}-${start_day_of_month}&asset_ID=${asset_id}`;
+                }else {
+                    endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1/meteredvolume/details?startDate=${start_year}-${start_month}-${start_day_of_month}&endDate=${end_year}-${end_month}-${end_day_of_month}&asset_ID=${asset_id}`;
+                }
                 endpoints.push(endpoint);
                 earliest_timestamp = null;
                 last_timestamp = null;
