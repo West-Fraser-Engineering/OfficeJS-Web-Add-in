@@ -169,10 +169,11 @@ async function makeRequest() {
                             }
                         }
 
+                        console.log('resolving callbacks', this_request_callbacks)
                         for (const callback of this_request_callbacks) {
                             callback.resolve();
                         }
-
+ 
                         resolve();
                     } catch (err) {
                         for (const callback of this_request_callbacks) {
