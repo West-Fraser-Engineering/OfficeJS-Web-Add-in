@@ -96,6 +96,7 @@ async function makeRequest() {
     for (const [endpoint, invocation_entries] of requests) {
         promises.push(new Promise<void>(async (resolve, reject) => {
             try {
+                console.log('Web request to ', endpoint);
                 const response = await fetch(endpoint, {
                     headers: {
                         'X-API-Key': localStorage.getItem('aeso-api-key') ?? ""
