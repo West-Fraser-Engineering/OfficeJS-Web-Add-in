@@ -14,17 +14,13 @@ async function AesoPoolPrice(date, hour) {
 
     console.log(json);
 
-    js_date = new Date(js_date.getUTCFullYear(), js_date.getUTCMonth(), js_date.getUTCDate() + 1);
+    // js_date = new Date(js_date.getUTCFullYear(), js_date.getUTCMonth(), js_date.getUTCDate() + 1);
 
-    const begin_datetime_mpt = `${
-        js_date.getUTCFullYear()
-    }-${
-        (js_date.getUTCMonth() + 1).toString().padStart(2, '0')
-    }-${
-        (js_date.getUTCDate() + 1).toString().padStart(2, '0')
-    } ${
-        hour.toString().padStart(2, '0')
-    }:00`
+    const begin_datetime_mpt = `${js_date.getUTCFullYear()
+        }-${(js_date.getUTCMonth() + 1).toString().padStart(2, '0')
+        }-${(js_date.getUTCDate() + 1).toString().padStart(2, '0')
+        } ${(hour - 1).toString().padStart(2, '0')
+        }:00`
     console.log('Search begin_datetime_mpt', begin_datetime_mpt);
     for (const item of json.return["Pool Price Report"]) {
         if (item.begin_datetime_mpt == begin_datetime_mpt) {
