@@ -140,6 +140,8 @@ async function makeRequest() {
                 earliest_timestamp = null;
                 last_timestamp = null;
             }
+
+            last_timestamp = timestamp;
         }
     }
 
