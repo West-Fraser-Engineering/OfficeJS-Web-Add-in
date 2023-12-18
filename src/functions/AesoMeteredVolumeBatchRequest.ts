@@ -67,6 +67,8 @@ function pushRequest(asset_id: string, dateTime: Date): Promise<void> {
 }
 
 async function makeRequest() {
+    console.log("Make request called");
+    
     const millisecondsInDay = 24 * 60 * 60 * 1000;
     const maxGapInDays = 5;
 
@@ -114,8 +116,8 @@ async function makeRequest() {
                 last_timestamp = timestamp;
             }
 
-            const records = (Math.floor((timestamp - earliest_timestamp) / millisecondsInDay) + 1) * 24;
-            if (records > 80_000
+            const number_of_records = (Math.floor((timestamp - earliest_timestamp) / millisecondsInDay) + 1) * 24;
+            if (number_of_records > 80_000
                 || Math.floor((timestamp - last_timestamp) / millisecondsInDay) <= maxGapInDays
                 || i == sorted_asset_batch_entries.length - 1
             ) {
