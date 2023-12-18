@@ -118,7 +118,7 @@ async function makeRequest() {
 
             const number_of_records = (Math.floor((timestamp - earliest_timestamp) / millisecondsInDay) + 1) * 24;
             if (number_of_records > 80_000
-                || Math.floor((timestamp - last_timestamp) / millisecondsInDay) <= maxGapInDays
+                || Math.floor((timestamp - last_timestamp) / millisecondsInDay) > maxGapInDays
                 || i == sorted_asset_batch_entries.length - 1
             ) {
                 const start_date = new Date(earliest_timestamp);
