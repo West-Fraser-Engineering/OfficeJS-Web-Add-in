@@ -22,6 +22,7 @@ async function AesoPoolPrice(date, hour) {
         } ${(hour - 1).toString().padStart(2, '0')
         }:00`
     console.log('Search begin_datetime_mpt', begin_datetime_mpt);
+    console.log(json.return["Pool Price Report"])
     for (const item of json.return["Pool Price Report"]) {
         if (item.begin_datetime_mpt == begin_datetime_mpt) {
             return item.pool_price;
