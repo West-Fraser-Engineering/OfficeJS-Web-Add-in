@@ -25,9 +25,9 @@
         }
 
     });
-    
+
     function sayHello() {
-        Office.context.ui.displayDialogAsync('/build/taskpane/taskpane.html');
+        Office.context.ui.displayDialogAsync(window.location.origin + '/build/taskpane/taskpane.html');
         Excel.run(context => {
 
             // Insert text 'Hello world!' into cell A1.

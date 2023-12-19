@@ -1,5 +1,6 @@
 import { getMeteredVolume } from "./AesoMeteredVolumeBatchRequest";
 import { pushRequest } from "./AesoPoolPriceBatchRequest";
+import { downloadEMeterData, signIn } from "./BcHydroEMeter";
 import { parseDate } from "./xlDate";
 
 /**
@@ -77,5 +78,69 @@ function createFormattedNumber(value: number, format: string) {
 function LogInput(value: any) {
     console.log(typeof value + ":", value);
 }
+
+
+/**
+ * Opens a window at the location.
+ * @customfunction
+ * @returns
+ */
+function ShowWindow(url: string) {
+    Office.context.ui.displayDialogAsync(url, { promptBeforeOpen: false, displayInIframe: false });
+}
+
+/**
+ * Signs into BC Hydro eMeter.
+ * @customfunction
+ * @returns
+ */
+function BcHydroSignIn(username: string, password: string) {
+    return signIn(username, password);
+}
+
+/**
+ * Downloads eMeter usage data for a specified meter within a date range.
+ * @param username - The eMeter account username.
+ * @param password - The eMeter account password.
+ * @param meterId - The unique identifier of the meter for which data is requested.
+ * @param startDate - The start date of the data range (inclusive).
+ * @param endDate - The end date of the data range (inclusive).
+ * @returns - A promise that resolves with the downloaded eMeter usage data.
+ * @customfunction
+ */
+async function BcHydroEMeterUsage(username: string, password: string, meter_id: string, start_date: number | string, end_date: number | string): Promise<string[][]> {
+    try {
+        let js_start_date = parseDate(start_date);
+        let js_end_date = parseDate(end_date);
+
+        return downloadEMeterData(username, password, meter_id, js_start_date, js_end_date, "usage");
+    } catch(err: any) {
+        console.error(err);
+        return [[err.message]] as string[][];
+    }
+}
+
+/**
+ * Downloads eMeter demand data for a specified meter within a date range.
+ * @param username - The eMeter account username.
+ * @param password - The eMeter account password.
+ * @param meterId - The unique identifier of the meter for which data is requested.
+ * @param startDate - The start date of the data range (inclusive).
+ * @param endDate - The end date of the data range (inclusive).
+ * @returns - A promise that resolves with the downloaded eMeter demand data.
+ * @customfunction
+ */
+async function BcHydroEMeterDemand(username: string, password: string, meter_id: string, start_date: number | string, end_date: number | string): Promise<string[][]> {
+    try {
+        let js_start_date = parseDate(start_date);
+        let js_end_date = parseDate(end_date);
+
+        return downloadEMeterData(username, password, meter_id, js_start_date, js_end_date, "demand");
+    } catch(err: any) {
+        console.error(err);
+        return [[err.message]] as string[][];
+    }
+}
+
 
 declare var CustomFunctions: any;

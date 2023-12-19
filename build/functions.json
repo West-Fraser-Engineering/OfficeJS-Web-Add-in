@@ -66,6 +66,100 @@
                 }
             ],
             "result": {}
+        },
+        {
+            "description": "Opens a window at the location.",
+            "id": "SHOWWINDOW",
+            "name": "SHOWWINDOW",
+            "parameters": [
+                {
+                    "name": "url",
+                    "type": "string"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Signs into BC Hydro eMeter.",
+            "id": "BCHYDROSIGNIN",
+            "name": "BCHYDROSIGNIN",
+            "parameters": [
+                {
+                    "name": "username",
+                    "type": "string"
+                },
+                {
+                    "name": "password",
+                    "type": "string"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Downloads eMeter usage data for a specified meter within a date range.",
+            "id": "BCHYDROEMETERUSAGE",
+            "name": "BCHYDROEMETERUSAGE",
+            "parameters": [
+                {
+                    "description": "The eMeter account username.",
+                    "name": "username",
+                    "type": "string"
+                },
+                {
+                    "description": "The eMeter account password.",
+                    "name": "password",
+                    "type": "string"
+                },
+                {
+                    "name": "meter_id",
+                    "type": "string"
+                },
+                {
+                    "name": "start_date",
+                    "type": "any"
+                },
+                {
+                    "name": "end_date",
+                    "type": "any"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "description": "Downloads eMeter demand data for a specified meter within a date range.",
+            "id": "BCHYDROEMETERDEMAND",
+            "name": "BCHYDROEMETERDEMAND",
+            "parameters": [
+                {
+                    "description": "The eMeter account username.",
+                    "name": "username",
+                    "type": "string"
+                },
+                {
+                    "description": "The eMeter account password.",
+                    "name": "password",
+                    "type": "string"
+                },
+                {
+                    "name": "meter_id",
+                    "type": "string"
+                },
+                {
+                    "name": "start_date",
+                    "type": "any"
+                },
+                {
+                    "name": "end_date",
+                    "type": "any"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }
