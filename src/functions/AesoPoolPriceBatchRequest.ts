@@ -80,10 +80,10 @@ async function makeRequest() {
             // Make a request
             let start_year = start_date.getUTCFullYear().toFixed();
             let start_month = (start_date.getUTCMonth() + 1).toFixed().padStart(2, "0");
-            let start_day = (start_date.getUTCDate() + 1).toFixed().padStart(2, "0");
+            let start_day = start_date.getUTCDate().toFixed().padStart(2, "0");
             let end_year = date.getUTCFullYear().toFixed();
             let end_month = (date.getUTCMonth() + 1).toFixed().padStart(2, "0");
-            let end_day = (date.getUTCDate() + 1).toFixed().padStart(2, "0");
+            let end_day = date.getUTCDate().toFixed().padStart(2, "0");
             const endpoint = `http://localhost:38820/https://api.aeso.ca/report/v1.1/price/poolPrice?startDate=${start_year}-${start_month}-${start_day}&endDate=${end_year}-${end_month}-${end_day}`;
 
             requests.set(endpoint, batched_invocation_entries);

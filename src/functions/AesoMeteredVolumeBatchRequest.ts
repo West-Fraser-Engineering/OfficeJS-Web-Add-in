@@ -5,7 +5,7 @@ export interface AesoMeteredVolumeResponseBody {
     return: {
         pool_participant_ID: string,
         asset_list: {
-            asset_id: string,
+            asset_ID: string,
             asset_class: string,
             metered_volume_list: {
                 begin_date_utc: DateTimeString,
@@ -27,7 +27,7 @@ let is_batched_request_scheduled = false;
 export async function getMeteredVolume(asset_id: string, dateTime: Date): Promise<number> {
     const date_time_string: DateTimeString = `${dateTime.getUTCFullYear().toFixed()
         }-${(dateTime.getUTCMonth() + 1).toFixed().padStart(2, '0')
-        }-${(dateTime.getUTCDate() + 1).toFixed().padStart(2, '0')
+        }-${dateTime.getUTCDate().toFixed().padStart(2, '0')
         } ${dateTime.getUTCHours().toFixed().padStart(2, '0')
         }:00`;
 
@@ -67,8 +67,6 @@ function pushRequest(asset_id: string, dateTime: Date): Promise<void> {
 }
 
 async function makeRequest() {
-    console.log("Make request called");
-
     const millisecondsInDay = 24 * 60 * 60 * 1000;
     const maxGapInDays = 5;
     const aesoApiKey = localStorage.getItem('aeso-api-key') ?? "";
@@ -98,6 +96,7 @@ async function makeRequest() {
         });
     }
 
+
     const endpoints: string[] = [];
     const request_promises: Promise<void>[] = [];
 
@@ -112,9 +111,7 @@ async function makeRequest() {
 
         for (let i = 0; i < sorted_asset_batch_entries.length; i++) {
             const timestamp = sorted_asset_batch_entries[i][0];
-            callbacks.concat(sorted_asset_batch_entries[i][1]);
-            console.log('callbacks:', callbacks);
-            
+            callbacks = callbacks.concat(sorted_asset_batch_entries[i][1]);
 
             if (earliest_timestamp == null) {
                 earliest_timestamp = timestamp;
@@ -132,10 +129,10 @@ async function makeRequest() {
                 const end_date = new Date(timestamp);
                 const start_year = start_date.getUTCFullYear().toFixed();
                 const start_month = (start_date.getUTCMonth() + 1).toFixed().padStart(2, '0');
-                const start_day_of_month = (start_date.getUTCDate() + 1).toFixed().padStart(2, '0');
+                const start_day_of_month = start_date.getUTCDate().toFixed().padStart(2, '0');
                 const end_year = end_date.getUTCFullYear().toFixed();
                 const end_month = (end_date.getUTCMonth() + 1).toFixed().padStart(2, '0');
-                const end_day_of_month = (end_date.getUTCDate() + 1).toFixed().padStart(2, '0');
+                const end_day_of_month = end_date.getUTCDate().toFixed().padStart(2, '0');
 
                 let endpoint: string;
                 if (start_year == end_year && start_month == end_month && start_day_of_month == end_day_of_month) {
@@ -159,10 +156,10 @@ async function makeRequest() {
 
                         for (const pool_participant of json.return) {
                             for (const asset of pool_participant.asset_list) {
-                                let cached_asset = cache.get(asset.asset_id);
+                                let cached_asset = cache.get(asset.asset_ID);
                                 if (cached_asset == undefined) {
                                     cached_asset = new Map();
-                                    cache.set(asset.asset_id, cached_asset);
+                                    cache.set(asset.asset_ID, cached_asset);
                                 }
 
                                 for (const metered_volume of asset.metered_volume_list) {
@@ -171,7 +168,6 @@ async function makeRequest() {
                             }
                         }
 
-                        console.log('resolving callbacks', this_request_callbacks)
                         for (const callback of this_request_callbacks) {
                             callback.resolve();
                         }

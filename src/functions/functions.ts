@@ -13,11 +13,9 @@ async function AesoPoolPrice(date: number | string, hour: number): Promise<numbe
     let js_date = parseDate(date);
     const json = await pushRequest(js_date);
 
-    // js_date = new Date(js_date.getUTCFullYear(), js_date.getUTCMonth(), js_date.getUTCDate() + 1);
-
     const begin_datetime_mpt = `${js_date.getUTCFullYear()
         }-${(js_date.getUTCMonth() + 1).toString().padStart(2, '0')
-        }-${(js_date.getUTCDate() + 1).toString().padStart(2, '0')
+        }-${js_date.getUTCDate().toString().padStart(2, '0')
         } ${(hour - 1).toString().padStart(2, '0')
         }:00`
     for (const item of json.return["Pool Price Report"]) {
