@@ -113,6 +113,8 @@ async function makeRequest() {
         for (let i = 0; i < sorted_asset_batch_entries.length; i++) {
             const timestamp = sorted_asset_batch_entries[i][0];
             callbacks.concat(sorted_asset_batch_entries[i][1]);
+            console.log('callbacks:', callbacks);
+            
 
             if (earliest_timestamp == null) {
                 earliest_timestamp = timestamp;
