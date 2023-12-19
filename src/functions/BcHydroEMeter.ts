@@ -35,7 +35,16 @@ function daysInMonth(year: number, month: number) {
     return new Date(year, month, 0).getDate()
 }
 
+type CacheKey = `${string}:${number}:${number}`;
+const cache: Map<CacheKey, string[][]> = new Map();
+
 export async function downloadEMeterData(username: string, password: string, meter_id: string, start_date: Date, end_date: Date, type: "usage" | "demand") {
+    const key: CacheKey = `${meter_id}:${start_date.getTime()}:${end_date.getTime()}`;
+    const cached_value = cache.get(key);
+    if (cached_value) {
+        return cached_value;
+    }
+
     const timestamp_ms = new Date().getTime();
     const intervalLength = 60; // minutes.  Removed from params and hardcoded to 60 minutes to save space in caching.
     const startDate = `${start_date.getUTCMonth() + 1}/${start_date.getUTCDate()}/${start_date.getUTCFullYear()}`;
@@ -65,7 +74,9 @@ export async function downloadEMeterData(username: string, password: string, met
             console.log('Fetching response body')
             const response_body = await response.json() as EMeterResponseBody;
             console.log(response_body);
-            return parseDataResponse(response_body)
+            const data = parseDataResponse(response_body);
+            cache.set(key, data);
+            return data;
         } else if (!triedSigningIn && (response.status === 500 || response.status === 401)) {
             const success = await signIn(username, password);
             if (!success) {
