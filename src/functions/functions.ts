@@ -60,7 +60,7 @@ async function AesoMeteredVolume(asset_id: string, date: number | string, hour: 
  * @param {string} format (e.g. "0.00%")
  * @returns A formatted number value.
  */
-function createFormattedNumber(value: number, format: string) {
+function DEBUG_createFormattedNumber(value: number, format: string) {
     return {
         type: "FormattedNumber",
         basicValue: value,
@@ -75,7 +75,7 @@ function createFormattedNumber(value: number, format: string) {
  * @param {any} value
  * @returns
  */
-function LogInput(value: any) {
+function DEBUG_LogInput(value: any) {
     console.log(typeof value + ":", value);
 }
 
@@ -85,7 +85,7 @@ function LogInput(value: any) {
  * @customfunction
  * @returns
  */
-function ShowWindow(url: string) {
+function DEBUG_ShowWindow(url: string) {
     Office.context.ui.displayDialogAsync(url, { promptBeforeOpen: false, displayInIframe: false });
 }
 
@@ -94,7 +94,7 @@ function ShowWindow(url: string) {
  * @customfunction
  * @returns
  */
-function BcHydroSignIn(username: string, password: string) {
+function DEBUG_BcHydroSignIn(username: string, password: string) {
     return signIn(username, password);
 }
 
@@ -116,7 +116,7 @@ async function BcHydroEMeterUsage(username: string, password: string, meter_id: 
         return downloadEMeterData(username, password, meter_id, js_start_date, js_end_date, "usage");
     } catch(err: any) {
         console.error(err);
-        return [[err.message]] as string[][];
+        throw err;
     }
 }
 
@@ -138,7 +138,7 @@ async function BcHydroEMeterDemand(username: string, password: string, meter_id:
         return downloadEMeterData(username, password, meter_id, js_start_date, js_end_date, "demand");
     } catch(err: any) {
         console.error(err);
-        return [[err.message]] as string[][];
+        throw err;
     }
 }
 

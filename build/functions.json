@@ -40,8 +40,8 @@
         },
         {
             "description": "Take a number as the input value and return a formatted number value as the output.",
-            "id": "CREATEFORMATTEDNUMBER",
-            "name": "CREATEFORMATTEDNUMBER",
+            "id": "DEBUG_CREATEFORMATTEDNUMBER",
+            "name": "DEBUG_CREATEFORMATTEDNUMBER",
             "parameters": [
                 {
                     "name": "value",
@@ -57,8 +57,8 @@
         },
         {
             "description": "Logs its input to the dev console.",
-            "id": "LOGINPUT",
-            "name": "LOGINPUT",
+            "id": "DEBUG_LOGINPUT",
+            "name": "DEBUG_LOGINPUT",
             "parameters": [
                 {
                     "name": "value",
@@ -69,8 +69,8 @@
         },
         {
             "description": "Opens a window at the location.",
-            "id": "SHOWWINDOW",
-            "name": "SHOWWINDOW",
+            "id": "DEBUG_SHOWWINDOW",
+            "name": "DEBUG_SHOWWINDOW",
             "parameters": [
                 {
                     "name": "url",
@@ -81,8 +81,8 @@
         },
         {
             "description": "Signs into BC Hydro eMeter.",
-            "id": "BCHYDROSIGNIN",
-            "name": "BCHYDROSIGNIN",
+            "id": "DEBUG_BCHYDROSIGNIN",
+            "name": "DEBUG_BCHYDROSIGNIN",
             "parameters": [
                 {
                     "name": "username",
