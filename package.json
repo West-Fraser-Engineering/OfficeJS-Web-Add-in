@@ -4,6 +4,9 @@
     "description": "--- page_type: sample urlFragment: excel-add-in-hello-world products:   - office-add-ins   - office-excel   - office   - office-365 languages:   - javascript extensions:   contentType: samples   technologies:     - Add-ins   createdDate: '10/11/2021 10:00:00 AM' description: 'Create a simple Excel add-in that displays hello world.' ---",
     "private": true,
     "scripts": {
+        "start": " http-server -S -C C:\\Users\\herec\\.office-addin-dev-certs\\localhost.crt -K C:\\Users\\herec\\.office-addin-dev-certs\\localhost.key --cors . -p 8080",
+        "build": "webpack",
+        "build:watch": "webpack --watch",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],

@@ -23,9 +23,11 @@
         if (info.host === Office.HostType.Excel) {
             document.getElementById("helloButton").onclick = sayHello;
         }
-    });
 
+    });
+    
     function sayHello() {
+        Office.context.ui.displayDialogAsync('/build/taskpane/taskpane.html');
         Excel.run(context => {
 
             // Insert text 'Hello world!' into cell A1.

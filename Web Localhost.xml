@@ -7,7 +7,7 @@
   <Version>1.0.0.0</Version>
   <ProviderName>West Fraser</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="WEB Add-in"/>
+  <DisplayName DefaultValue="WEB Add-in Localhost"/>
   <Description DefaultValue="Connects to APIs and performs web scraping for the Energy Team."/>
   <IconUrl DefaultValue="https://localhost:8080/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:8080/assets/icon-64.png"/>
