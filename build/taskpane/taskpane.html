@@ -9,10 +9,7 @@
 </head>
 
 <body>
-    <p>Welcome from West Fraser's Engineering Department!</p>
-    <p>This add-in will set cell A1 to the value 'Hello world!'.</p>
-    <button id="helloButton">Say hello</button>
-    <p>Build 2.</p>
+    <h3>Please setup the following API keys:</h3>
     <p>AESO API Key</p>
     <input id="aeso-api-key" type="text" placeholder="AESO API Key...">
 </body>
@@ -21,22 +18,9 @@
     Office.onReady((info) => {
         // Check that we loaded into Excel
         if (info.host === Office.HostType.Excel) {
-            document.getElementById("helloButton").onclick = sayHello;
+
         }
-
     });
-
-    function sayHello() {
-        Office.context.ui.displayDialogAsync(window.location.origin + '/build/taskpane/taskpane.html');
-        Excel.run(context => {
-
-            // Insert text 'Hello world!' into cell A1.
-            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [['Hello world!']];
-
-            // sync the context to run the previous API call, and return.
-            return context.sync();
-        });
-    }
 
     /**@type {HTMLInputElement | null} */
     const aeso_api_key = document.getElementById('aeso-api-key');
