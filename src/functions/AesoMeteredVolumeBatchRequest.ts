@@ -31,6 +31,8 @@ export async function getMeteredVolume(asset_id: string, dateTime: Date): Promis
         } ${dateTime.getUTCHours().toFixed().padStart(2, '0')
         }:00`;
 
+    console.log('Fetching volume for', asset_id, 'at', date_time_string);
+
     for (let i = 0; i < 2; i++) {
         const cached_asset = cache.get(asset_id);
         const cached_volume = cached_asset?.get(date_time_string);
@@ -171,7 +173,7 @@ async function makeRequest() {
                         for (const callback of this_request_callbacks) {
                             callback.resolve();
                         }
- 
+
                         resolve();
                     } catch (err) {
                         for (const callback of this_request_callbacks) {
